@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RSP Family Mart</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <div class="logo">
+            🛒 RSP Family Mart
+        </div>
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search vegetables, fruits, clothes..."
+                oninput="searchProducts()"
+            >
+
+            <button onclick="searchProducts()">
+                🔍
+            </button>
+
+        </div>
+
+        <div class="header-buttons">
+
+            <button onclick="showWishlist()">
+                ❤️ Wishlist
+                <span id="wishCount">0</span>
+            </button>
+
+            <button onclick="showCart()">
+                🛒 Cart
+                <span id="cartCount">0</span>
+            </button>
+
+            <button onclick="showLogin()">
+                👤 Login
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= CATEGORY MENU ================= -->
+
+    <nav>
+
+        <button onclick="showAll()">
+            🏠 All
+        </button>
+
+        <button onclick="filterCategory('Vegetables')">
+            🥦 Vegetables
+        </button>
+
+        <button onclick="filterCategory('Fruits')">
+            🍎 Fruits
+        </button>
+
+        <button onclick="filterCategory('Dry Fruits')">
+            🥜 Dry Fruits
+        </button>
+
+        <button onclick="filterCategory('Fast Food')">
+            🍕 Fast Food
+        </button>
+
+        <button onclick="filterCategory('Indian Food')">
+            🍛 Indian Food
+        </button>
+
+        <button onclick="filterCategory('Non-Veg')">
+            🍗 Non-Veg
+        </button>
+
+        <button onclick="filterCategory('Rice & Biryani')">
+            🍚 Rice
+        </button>
+
+        <button onclick="filterCategory('Cold Drinks')">
+            🥤 Drinks
+        </button>
+
+        <button onclick="filterCategory('Tea & Coffee')">
+            ☕ Tea/Coffee
+        </button>
+
+        <button onclick="filterCategory('Desserts')">
+            🍰 Desserts
+        </button>
+
+        <button onclick="filterCategory('Healthy Food')">
+            🥗 Healthy
+        </button>
+
+        <button onclick="filterCategory('Clothes')">
+            👕 Clothes
+        </button>
+
+        <button onclick="filterCategory('Makeup')">
+            💄 Makeup
+        </button>
+
+        <button onclick="filterCategory('Perfume')">
+            🌸 Perfume
+        </button>
+
+        <button onclick="filterCategory('Face Care')">
+            🧴 Face Care
+        </button>
+
+        <button onclick="filterCategory('Bath & Body')">
+            🧼 Soap
+        </button>
+
+        <button onclick="filterCategory('Hair Care')">
+            💇 Hair Care
+        </button>
+
+        <button onclick="filterCategory('Women Care')">
+            🩷 Women Care
+        </button>
+
+        <button onclick="filterCategory('Bags & Accessories')">
+            👜 Bags
+        </button>
+
+        <button onclick="filterCategory('Footwear')">
+            👟 Footwear
+        </button>
+
+    </nav>
+
+
+    <!-- ================= HERO SECTION ================= -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Welcome to RSP Family Mart 🛒
+            </h1>
+
+            <p>
+                Grocery, Food, Fashion & Personal Care
+                all in one place.
+            </p>
+
+            <button onclick="showAll()">
+                Shop Now 🛍️
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PRODUCTS SECTION ================= -->
+
+    <section
+        class="products-section"
+        id="productsSection"
+    >
+
+        <div class="section-title">
+
+            <h2>
+                🛍️ Our Products
+            </h2>
+
+            <select
+                id="sortSelect"
+                onchange="sortProducts()"
+            >
+
+                <option value="default">
+                    Sort Products
+                </option>
+
+                <option value="low">
+                    Price Low to High
+                </option>
+
+                <option value="high">
+                    Price High to Low
+                </option>
+
+                <option value="rating">
+                    Rating
+                </option>
+
+                <option value="name">
+                    Name A-Z
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Products JavaScript se yahan aayenge -->
+
+        <div
+            id="productContainer"
+            class="product-container"
+        ></div>
+
+    </section>
+
+
+    <!-- ================= CART MODAL ================= -->
+
+    <div
+        id="cartModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <span
+                class="close"
+                onclick="closeModal('cartModal')"
+            >
+                &times;
+            </span>
+
+            <h2>
+                🛒 Your Cart
+            </h2>
+
+            <div id="cartItems"></div>
+
+            <div class="cart-total">
+
+                <h3>
+                    Total:
+                    ₹<span id="cartTotal">0</span>
+                </h3>
+
+            </div>
+
+            <button
+                class="checkout-btn"
+                onclick="showCheckout()"
+            >
+                Proceed to Checkout
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= PRODUCT DETAILS MODAL ================= -->
+
+    <div
+        id="productModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <span
+                class="close"
+                onclick="closeModal('productModal')"
+            >
+                &times;
+            </span>
+
+            <div id="productDetails"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= WISHLIST MODAL ================= -->
+
+    <div
+        id="wishlistModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <span
+                class="close"
+                onclick="closeModal('wishlistModal')"
+            >
+                &times;
+            </span>
+
+            <h2>
+                ❤️ My Wishlist
+            </h2>
+
+            <div id="wishlistItems"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= CHECKOUT MODAL ================= -->
+
+    <div
+        id="checkoutModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <span
+                class="close"
+                onclick="closeModal('checkoutModal')"
+            >
+                &times;
+            </span>
+
+            <h2>
+                💳 Checkout
+            </h2>
+
+            <form onsubmit="placeOrder(event)">
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Full Name"
+                    required
+                >
+
+                <input
+                    type="tel"
+                    id="customerPhone"
+                    placeholder="Mobile Number"
+                    required
+                >
+
+                <textarea
+                    id="customerAddress"
+                    placeholder="Delivery Address"
+                    required
+                ></textarea>
+
+                <select
+                    id="paymentMethod"
+                    required
+                >
+
+                    <option value="">
+                        Select Payment Method
+                    </option>
+
+                    <option value="COD">
+                        Cash on Delivery
+                    </option>
+
+                    <option value="UPI">
+                        UPI
+                    </option>
+
+                    <option value="Card">
+                        Card
+                    </option>
+
+                </select>
+
+                <button type="submit">
+                    Place Order
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= ORDER SUCCESS ================= -->
+
+    <div
+        id="successModal"
+        class="modal"
+    >
+
+        <div class="modal-content success">
+
+            <h1>
+                🎉 Order Placed Successfully!
+            </h1>
+
+            <p>
+                Thank you for shopping with
+                RSP Family Mart.
+            </p>
+
+            <button
+                onclick="closeModal('successModal')"
+            >
+                Continue Shopping
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= LOGIN MODAL ================= -->
+
+    <div
+        id="loginModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <span
+                class="close"
+                onclick="closeModal('loginModal')"
+            >
+                &times;
+            </span>
+
+            <h2>
+                👤 Login
+            </h2>
+
+            <form onsubmit="loginUser(event)">
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter Email"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter Password"
+                    required
+                >
+
+                <button type="submit">
+                    Login
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <h2>
+            🛒 RSP Family Mart
+        </h2>
+
+        <p>
+            Your one-stop online family shopping store.
+        </p>
+
+        <p>
+            Fresh Products • Best Quality • Easy Shopping
+        </p>
+
+        <p>
+            © 2026 RSP Family Mart | All Rights Reserved
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
